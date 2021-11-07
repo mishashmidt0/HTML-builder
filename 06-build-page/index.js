@@ -112,10 +112,8 @@ async function createCss() {
         );
     });
 }
-
 async function bundleCSS() {
     await createCss();
-
     fs.readdir(
         path.join(__dirname, 'styles'),
         { withFileTypes: true },
@@ -127,9 +125,7 @@ async function bundleCSS() {
                         path.join(__dirname, 'styles', file.name),
                         'utf-8'
                     );
-
                     let res = '';
-
                     stream.on('data', chunk => res += chunk);
                     stream.on('end', () => {
                         fs.appendFile(
@@ -156,7 +152,6 @@ let readT = new Promise(function (res, rej) {
             arr = data.toString();
             arr = arr.split('\n');
             arr = arr.map(item => item.trim());
-
             res(arr);
         });
 });
@@ -167,14 +162,13 @@ async function getComp(comp) {
             path.join(__dirname, 'components', `${comp}.html`),
             (err, data) => {
                 if (err) rej(err);
-                // let str = data.toString()
                 res(data.toString());
             }
         );
     });
 }
 
-// copyAssets();
+
 
 async function bundleHTML() {
     await createDir();
@@ -191,7 +185,6 @@ async function bundleHTML() {
         } else {
             let componentPath = arr[i].substring(2, arr[i].length - 2);
             let str = await getComp(componentPath);
-            // console.log(str);
             finalBundle.push(str);
         }
     }
@@ -203,7 +196,6 @@ async function bundleHTML() {
             if (err) throw err;
         }
     );
-    // console.log(finalBundle);
 }
 
 bundleHTML();
